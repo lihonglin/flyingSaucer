@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jstl/core">
+
+    <head>
+        <style type="text/css">
+            @page {
+                size: 11.69in 8.27in;   
+            }
+
+            body{
+                font-size:12px;
+                font-family: arial;
+                width:800px;
+            }
+
+            h2{
+                font-size:16px;
+                font-weight:bold;
+            }
+
+            a, a:visited{
+                text-decoration:none;
+                color:black;
+            }
+
+            p{
+                margin:15px;
+            }
+
+            .odd-row{ background-color:#FFFFE0; }
+            .even-row{ background-color:#FFFFFF; }
+
+            .companiesTable{
+                width:800px;
+                font-size:12px;
+                font-family: arial;
+                border: 1px solid #C1DAD7;
+                border-collapse: collapse;
+            }
+            .companiesTable td, .companiesTable th{
+                padding:3px;
+                border: 1px solid #C1DAD7;
+            }
+
+            .header{
+                background-color:#CAE8EA;
+                font-weight:bold;
+                width:auto;
+            }
+
+            .centeredCol{ text-align:center; }
+            .leftCol{ text-align:left; }
+            .rightCol{ text-align:right; }
+
+            .col1{ width:15px; text-align:center;}
+            .colDescr1{ width:200px; text-align:center;}
+        </style>
+    </head>
+
+    <body>
+        <h2>JSF Facelets Combined with the Flying Saucer Renderer</h2>
+
+        <p>
+            This is an example to illustrate what can be achieved when you 
+            combine the JSF Facelet generated XHTML with the all Java rendering of the
+            Flying Saucer renderer.
+        </p>
+
+        <p>
+            Below is a generated list of the top 12 companies according to Forbes. Use the links below 
+            to render the 'printable' page in either XHTML, PDF, PNG or SVG.	
+        </p>
+
+        <div style="width:auto;">
+            <h:dataTable styleClass="companiesTable" value="#{flyingSaucerController.testDataList}" var="testObject" cellpadding="0" cellspacing="0" headerClass="header" 
+                         columnClasses="col1, colDescr1" rowClasses="odd-row,even-row">
+                <h:column>
+                    <f:facet name="header">	
+                        <a href="?Sort=rank">Rank</a>
+                    </f:facet>
+                    <h:outputText value="#{testObject.index}"/>
+                </h:column>	
+
+                <h:column>
+                    <f:facet name="header">	
+                        <a href="?Sort=name">Name</a>
+                    </f:facet>
+                    <h:outputText value="#{testObject.randomData}"/>
+                </h:column>
+            </h:dataTable>
+
+            <c:if test="${param.RenderOutputType == null}">
+                <div class="centeredCol" style="margin:10px;">
+                    <table cellspacing="0" cellpadding="3" style="margin:auto;border:0px;">
+                        <tr>
+                            <td><a target="_blank" href="?RenderOutputType=pdf"><b>PDF Export</b></a></td>
+                            <td>|</td>
+                            <td><a target="_blank" href="?RenderOutputType=image"><b>PNG Export</b></a></td>	
+                            <td>|</td>
+                            <td><a target="_blank" href="?RenderOutputType=svg"><b>SVG Export</b></a></td>
+                        </tr>
+                    </table>
+                </div>
+            </c:if>
+        </div>
+    </body>
+</html>
